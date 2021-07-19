@@ -62,7 +62,10 @@ app.post("/register", authController.registerSubmit);
 // implement this - done
 app.get("/login", forwardAuthenticated, authController.login);
 app.post("/login", authController.loginSubmit);
-app.post("/login/github", authController.githubSubmit);
+app.get("/auth/github", passport.authenticate('github'));
+app.get("/auth/github/callback", passport.authenticate('github', { failureRedirect: '/login' }), function(req, res) {
+  res.redirect('/reminders')
+});
 
 app.listen(3001, function () {
   console.log(
