@@ -1,9 +1,20 @@
 let database = require("../database");
+const fetch = require("node-fetch");
+const { json, response } = require("express");
 
 let remindersController = {
-  list: (req, res) => {
+  list: async (req, res) => {
+    let unsplashUrl = "https://api.unsplash.com/search/photos?query=dog&client_id=m1oAyaxH-pXjJMFBWF9a3EBJ0chMxLzTF8uwGE9jiDg"
+    async function getRandomImg(url) {
+      const response = await fetch(url)
+      return response.json();
+    }
+    const contents = await getRandomImg(unsplashUrl);
+    const randomImgContents = contents.results[0]
+    const imgLink = randomImgContents.urls.small
+    
     let user = database.userModel.findById(req.user.id)
-    res.render("reminder/index", { reminders: user.reminders });
+    res.render("reminder/index", { reminders: user.reminders, image: imgLink });
   },
 
   new: (req, res) => {

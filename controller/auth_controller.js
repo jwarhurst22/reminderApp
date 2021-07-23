@@ -11,16 +11,12 @@ let authController = {
   },
 
   loginSubmit: passport.authenticate("local", {
-    successRedirect: "reminder/index",
-    failureRedirect: "auth/login",
+    successRedirect: "/reminders",
+    failureRedirect: "/login",
     }),
 
   registerSubmit: (req, res) => {
     // note - don't have to do at the moment.
-  },
-
-  github: (req, res) => {
-    res.redirect('/auth/github')
   },
 
 };
